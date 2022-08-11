@@ -1,12 +1,11 @@
 #!/bin/sh
 KOMPOSE_VERSION="v1.26.1"
 
-
 echo "Update APT repositories..."
 apt-get update
 
 echo "Verify that required packages are available..."
-apt-get install -y curl
+apt-get install -y curl cron-apt unattended-upgrades msmtp-mta
 
 echo "Install k3s..."
 curl -sfL https://get.k3s.io | sh -
@@ -14,7 +13,7 @@ curl -sfL https://get.k3s.io | sh -
 echo "Update system..."
 apt-get upgrade -y
 
- if "$1" == "lead";
+ if [ "$LEADER" == "YES" ] || [ "${LEADER}" == "yes" ] ;
  then
   echo "Install helm..."
   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
