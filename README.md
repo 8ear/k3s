@@ -9,3 +9,7 @@ For a leader:
 For a worker node:
 
 `wget-q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=NO sh -`
+
+## Sources
+- https://linuxize.com/post/wget-command-examples/
+- https://rancher.com/docs/k3s/latest/en/installation/install-options/
