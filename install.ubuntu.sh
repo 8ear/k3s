@@ -1,6 +1,6 @@
 #!/bin/sh
 KOMPOSE_VERSION="v1.26.1"
-printenv
+echo $LEADER
 
 echo "Update APT repositories..."
 apt-get update
