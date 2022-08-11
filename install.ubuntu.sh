@@ -13,7 +13,7 @@ curl -sfL https://get.k3s.io | sh -
 echo "Update system..."
 apt-get upgrade -y
 
- if [ "$LEADER" == "YES" ] || [ "${LEADER}" == "yes" ] ;
+ if [ "${LEADER}" == "YES" ] || [ "${LEADER}" == "yes" ] ;
  then
   echo "Install helm..."
   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
