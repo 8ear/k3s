@@ -2,13 +2,15 @@
 Installer Scripts to Make a new node directly ready with k3s to join the cluster
 
 ## Usage
+I use as base Image Ubuntu 22.04 LXC Container
+
 For a leader: 
 
-`wget-q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=YES sh -`
+`wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=YES sh -`
 
 For a worker node:
 
-`wget-q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=NO sh -`
+`wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=NO sh -`
 
 ## Sources
 - https://linuxize.com/post/wget-command-examples/
