@@ -14,7 +14,7 @@ apt-get upgrade -y
  if [[ "${LEADER}" == "YES" ]] || [[ "${LEADER}" == "yes" ]] ;
  then
   echo "Is there already a leader in place? [y/n]"
-  input r
+  read r
   if [[ "$r" == "y" ];
   then
    echo "What is the clusterDNS Name?"
