@@ -3,16 +3,16 @@ set -e
 set -o noglob
 
 KOMPOSE_VERSION="v1.26.1"
-clusterDNS=${clusterDNS}
-clusterDomain=${clusterDomain}
-K3S_TOKEN=${TOKEN}
+clusterDNS="${clusterDNS}"
+clusterDomain="${clusterDomain}"
+K3S_TOKEN="${TOKEN}"
 
 
 echo "Update APT repositories..."
 #apt-get update
 
 echo "Verify that required packages are available..."
-#apt-get install -y curl cron-apt unattended-upgrades msmtp-mta
+#apt-get install -y curl cron-apt unattended-upgrades msmtp-mta gpg
 
 echo "Update system..."
 #apt-get upgrade -y
@@ -49,7 +49,7 @@ then
   sudo apt-get install helm
 
   echo "Install kompose..."
-  curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-${KOMPOSE_VERSION}-amd64.deb -o kompose.deb
+  curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64.deb -o kompose.deb
   apt install ./kompose.deb
   rm ./kompose.deb
   
