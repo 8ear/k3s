@@ -40,8 +40,7 @@ then
   #read -rp "What should be the clusterDNS Name?" clusterDNS
   #read -rp "What should be the clusterDomain Name like k3s.local?" clusterDomain
   echo "Install k3s..."
-  CMD="curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $clusterDNS --cluster-domain $clusterDomain"
-  $CMD
+  curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $clusterDNS --cluster-domain $clusterDomain
    
   echo "Install helm..."
   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
