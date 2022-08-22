@@ -13,10 +13,10 @@ echo "Update system..."
 # check if leader = true = 1
 set -xv
 
-if [ "$LEADER" ] ;
+if [[ -v "$LEADER" ]] ;
 then
-  read -rp "Is there already a leader in place? [y/n]" r
-  if [ "$K3S_CLUSTER_INIT" ];
+  #read -rp "Is there already a leader in place? [y/n]" r
+  if [[ -v "$K3S_CLUSTER_INIT" ]];
   then
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
