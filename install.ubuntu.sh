@@ -1,17 +1,19 @@
 #!/bin/bash
 KOMPOSE_VERSION="v1.26.1"
-echo $LEADER
 
 echo "Update APT repositories..."
-apt-get update
+#apt-get update
 
 echo "Verify that required packages are available..."
-apt-get install -y curl cron-apt unattended-upgrades msmtp-mta
+#apt-get install -y curl cron-apt unattended-upgrades msmtp-mta
 
 echo "Update system..."
-apt-get upgrade -y
+#apt-get upgrade -y
 
 # check if leader = true = 1
+echo "$LEADER"
+set -xv
+
 if [ "$LEADER" = true ] ;
 then
   read -erp "Is there already a leader in place? [y/n]" -i "y" r
