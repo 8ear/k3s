@@ -13,14 +13,11 @@ apt-get upgrade -y
 
  if [[ "${LEADER}" == "YES" ]] || [[ "${LEADER}" == "yes" ]] ;
  then
-  echo "Is there already a leader in place? [y/n]"
-  read r
+  read -erp "Is there already a leader in place? [y/n]" -i "y" r
   if [[ "$r" == "y" ];
   then
-   echo "What is the clusterDNS Name?"
-   read clusterDNS
-   echo "What is the secret token?"
-   read TOKEN
+   read -erp "What is the clusterDNS Name?" clusterDNS
+   read -ersp "What is the secret token?" TOKEN
    echo "Install k3s..."
    curl -sfL https://get.k3s.io | K3S_TOKEN=$(TOKEN) sh -s - server --server https://$(clusterDNS):6443 --tls-san $(clusterDNS)
   fi
@@ -43,10 +40,8 @@ apt-get upgrade -y
   
 else
  echo "Configure an agent only..."
- echo "What is the secret token?"
- read TOKEN
- echo "What is the clusterDNS Name?"
- read clusterDNS
+ read -erp "What is the clusterDNS Name?" clusterDNS
+ read -ersp "What is the secret token?" TOKEN
  curl -sfL https://get.k3s.io | K3S_URL=https://$(clusterDNS):6443 K3S_TOKEN=$(TOKEN) sh -
  
  
