@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 KOMPOSE_VERSION="v1.26.1"
 echo $LEADER
 
@@ -11,6 +11,7 @@ apt-get install -y curl cron-apt unattended-upgrades msmtp-mta
 echo "Update system..."
 apt-get upgrade -y
 
+set -xv
  if [[ "${LEADER}" == "YES" ]] || [[ "${LEADER}" == "yes" ]] ;
  then
   read -erp "Is there already a leader in place? [y/n]" -i "y" r
