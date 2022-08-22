@@ -31,8 +31,7 @@ then
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
    echo "Install k3s..."
-   CMD="curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server --server https://$clusterDNS:6443 --tls-san $clusterDNS"
-   $CMD
+   curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server --server https://$clusterDNS:6443 --tls-san $clusterDNS
    echo "Check Nodes"
    kubectl get nodes
   else
@@ -69,7 +68,6 @@ else
  echo "Configure an agent only..."
  #read -rp "What is the clusterDNS Name?" clusterDNS
  #read -rsp "What is the secret token?" TOKEN
- CMD="curl -sfL https://get.k3s.io | K3S_URL=https://$clusterDNS:6443 K3S_TOKEN=$K3S_TOKEN sh -"
- $CMD
+ curl -sfL https://get.k3s.io | K3S_URL=https://$clusterDNS:6443 K3S_TOKEN=$K3S_TOKEN sh -
 fi
 echo "Node installed and can now be configured."
