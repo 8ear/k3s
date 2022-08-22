@@ -23,12 +23,15 @@ then
    read -rsp "What is the secret token?" TOKEN
    echo "Install k3s..."
    curl -sfL https://get.k3s.io | K3S_TOKEN=$(TOKEN) sh -s - server --server https://$(clusterDNS):6443 --tls-san $(clusterDNS)
-  fi
+   echo "Check Nodes"
+   kubectl get nodes
+  else
   
-  echo "Check Nodes"
-  kubectl get nodes
-  exit 1
-  
+  read -rp "What should be the clusterDNS Name?" clusterDNS
+  read -rp "What should be the clusterDomain Name like k3s.local?" clusterDomain
+  echo "Install k3s..."
+  curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $(clusterDNS) --cluster-domain "$clusterDomain"
+   
   echo "Install helm..."
   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
   sudo apt-get install apt-transport-https --yes
@@ -41,6 +44,13 @@ then
   apt install ./kompose.deb
   rm ./kompose.deb
   
+  echo "Install Longhorn"
+  helm repo add longhorn https://charts.longhorn.io
+  helm repo update
+  helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace
+  kubectl -n longhorn-system get pod
+  
+  fi
 else
  echo "Configure an agent only..."
  read -rp "What is the clusterDNS Name?" clusterDNS
