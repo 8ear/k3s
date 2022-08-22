@@ -10,9 +10,9 @@ export clusterDNS=<fix address where all cluster leader can be asked via DNS rou
 export clusterDomain=<domain suffix of cluster>
 export K3S_TOKEN=<your k3s token>
 # For a new cluster:
-wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=y K3S_CLUSTER_INIT=y clusterDNS=$clusterDNS clusterDomain=$clusterDomain K3S_TOKEN=$TOKEN sh -
+wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER= K3S_CLUSTER_INIT= clusterDNS=$clusterDNS clusterDomain=$clusterDomain K3S_TOKEN=$K3S_TOKEN sh -
 # To extend a existing cluster
-wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=y clusterDNS=$clusterDNS K3S_TOKEN=$TOKEN sh -
+wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER= clusterDNS=$clusterDNS K3S_TOKEN=$K3S_TOKEN sh -
 
 ```
 
@@ -20,7 +20,7 @@ For a worker node:
 
 ```bash
 export K3S_TOKEN=<your k3s token>
-wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | clusterDNS=$clusterDNS K3S_TOKEN=$TOKEN sh -
+wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | clusterDNS=$clusterDNS K3S_TOKEN=$K3S_TOKEN sh -
 ```
 
 ## Sources
