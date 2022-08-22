@@ -5,12 +5,23 @@ Installer Scripts to Make a new node directly ready with k3s to join the cluster
 I use as base Image Ubuntu 22.04 LXC Container
 
 For a leader: 
+```bash
+export clusterDNS=<fix address where all cluster leader can be asked via DNS round robin or any else LB>
+export clusterDomain=<domain suffix of cluster>
+export K3S_TOKEN=<your k3s token>
+# For a new cluster:
+wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=y K3S_CLUSTER_INIT=y clusterDNS=$clusterDNS clusterDomain=$clusterDomain K3S_TOKEN=$TOKEN sh -
+# To extend a existing cluster
+wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=y clusterDNS=$clusterDNS K3S_TOKEN=$TOKEN sh -
 
-`wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=YES sh -`
+```
 
 For a worker node:
 
-`wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | LEADER=NO sh -`
+```bash
+export K3S_TOKEN=<your k3s token>
+wget -q -O - https://raw.githubusercontent.com/8ear/k3s/main/install.ubuntu.sh | clusterDNS=$clusterDNS K3S_TOKEN=$TOKEN sh -
+```
 
 ## Sources
 - https://linuxize.com/post/wget-command-examples/
