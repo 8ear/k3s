@@ -12,10 +12,10 @@ echo "Update system..."
 apt-get upgrade -y
 
 # check if leader = true = 1
-if $LEADER ;
+if [ "$LEADER" = true ] ;
 then
   read -erp "Is there already a leader in place? [y/n]" -i "y" r
-  if [[ "$r" == "y" ];
+  if [ "$r" = "y" ];
   then
    read -erp "What is the clusterDNS Name?" clusterDNS
    read -ersp "What is the secret token?" TOKEN
