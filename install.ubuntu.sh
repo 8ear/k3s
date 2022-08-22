@@ -12,7 +12,7 @@ echo "Update system..."
 apt-get upgrade -y
 
 set -xv
- if [[ "${LEADER}" == "YES" ]] || [[ "${LEADER}" == "yes" ]] ;
+ if [[ "$(LEADER)" == "YES" ]] || [[ "$(LEADER)" == "yes" ]] ;
  then
   read -erp "Is there already a leader in place? [y/n]" -i "y" r
   if [[ "$r" == "y" ];
