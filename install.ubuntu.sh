@@ -31,7 +31,8 @@ then
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
    echo "Install k3s..."
-   curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server --server https://$clusterDNS:6443 --tls-san $clusterDNS
+   CMD="curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server --server https://$clusterDNS:6443 --tls-san $clusterDNS"
+   $CMD
    echo "Check Nodes"
    kubectl get nodes
   else
@@ -39,7 +40,8 @@ then
   #read -rp "What should be the clusterDNS Name?" clusterDNS
   #read -rp "What should be the clusterDomain Name like k3s.local?" clusterDomain
   echo "Install k3s..."
-  curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $(clusterDNS) --cluster-domain $(clusterDomain)
+  CMD="curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $(clusterDNS) --cluster-domain $(clusterDomain)"
+  $CMD
    
   echo "Install helm..."
   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
@@ -68,6 +70,7 @@ else
  echo "Configure an agent only..."
  #read -rp "What is the clusterDNS Name?" clusterDNS
  #read -rsp "What is the secret token?" TOKEN
- curl -sfL https://get.k3s.io | K3S_URL=https://$(clusterDNS):6443 K3S_TOKEN=$(K3S_TOKEN) sh -
+ CMD="curl -sfL https://get.k3s.io | K3S_URL=https://$(clusterDNS):6443 K3S_TOKEN=$(K3S_TOKEN) sh -"
+ $CMD
 fi
 echo "Node installed and can now be configured."
