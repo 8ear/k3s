@@ -11,12 +11,15 @@ echo "Update system..."
 #apt-get upgrade -y
 
 # check if leader = true = 1
+echo "----"
+printenv
+echo "----"
 set -xv
 
-if [[ -v "$LEADER" ]] ;
+if [[ -z "$LEADER" ]];
 then
   #read -rp "Is there already a leader in place? [y/n]" r
-  if [[ -v "$K3S_CLUSTER_INIT" ]];
+  if [[ -z "$K3S_CLUSTER_INIT" ]];
   then
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
