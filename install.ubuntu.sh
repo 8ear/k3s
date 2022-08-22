@@ -1,5 +1,9 @@
 #!/bin/bash
+set -e
+set -o noglob
+
 KOMPOSE_VERSION="v1.26.1"
+
 
 echo "Update APT repositories..."
 #apt-get update
@@ -16,10 +20,10 @@ printenv
 echo "----"
 set -xv
 
-if [[ -z {$LEADER} ]];
+if [ "{$LEADER}" = true ];
 then
   #read -rp "Is there already a leader in place? [y/n]" r
-  if [[ -z ${K3S_CLUSTER_INIT} ]];
+  if [ "${K3S_CLUSTER_INIT}" = true ];
   then
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
