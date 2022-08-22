@@ -9,13 +9,10 @@ K3S_TOKEN="${TOKEN}"
 
 
 echo "Update APT repositories..."
-#apt-get update
+apt-get update
 
 echo "Verify that required packages are available..."
-#apt-get install -y curl cron-apt unattended-upgrades msmtp-mta gpg
-
-echo "Update system..."
-#apt-get upgrade -y
+apt-get install -y curl cron-apt unattended-upgrades msmtp-mta gpg
 
 # check if leader = true = 1
 echo "----"
@@ -70,4 +67,13 @@ else
  #read -rsp "What is the secret token?" TOKEN
  curl -sfL https://get.k3s.io | K3S_URL=https://$clusterDNS:6443 K3S_TOKEN=$K3S_TOKEN sh -
 fi
+
+exit 1
+echo "Update system..."
+apt-get upgrade -y
+
+
+
 echo "Node installed and can now be configured."
+
+
