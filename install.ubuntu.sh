@@ -49,9 +49,13 @@ then
   sudo apt-get install helm
 
   echo "Install kompose..."
-  curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64.deb -o kompose.deb
-  apt install ./kompose.deb
-  rm ./kompose.deb
+  #curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64.deb -o kompose.deb
+  #apt install ./kompose.deb
+  #rm ./kompose.deb
+  # Linux
+  curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64 -o kompose
+  chmod +x kompose
+  sudo mv ./kompose /usr/local/bin/kompose
   
   echo "Install Longhorn"
   helm repo add longhorn https://charts.longhorn.io
