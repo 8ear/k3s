@@ -20,10 +20,10 @@ printenv
 echo "----"
 set -xv
 
-if [ "{$LEADER}" = true ];
+if [ "$LEADER" = true ];
 then
   #read -rp "Is there already a leader in place? [y/n]" r
-  if [ "${K3S_CLUSTER_INIT}" = true ];
+  if [ "$K3S_CLUSTER_INIT" = true ];
   then
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
