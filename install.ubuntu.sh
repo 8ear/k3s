@@ -16,11 +16,11 @@ set -xv
 
 if [ "$LEADER" = true ] ;
 then
-  read -erp "Is there already a leader in place? [y/n]" -i "y" r
+  read -rp "Is there already a leader in place? [y/n]" -i "y" r
   if [ "$r" = "y" ];
   then
-   read -erp "What is the clusterDNS Name?" clusterDNS
-   read -ersp "What is the secret token?" TOKEN
+   read -rp "What is the clusterDNS Name?" clusterDNS
+   read -rsp "What is the secret token?" TOKEN
    echo "Install k3s..."
    curl -sfL https://get.k3s.io | K3S_TOKEN=$(TOKEN) sh -s - server --server https://$(clusterDNS):6443 --tls-san $(clusterDNS)
   fi
@@ -43,8 +43,8 @@ then
   
 else
  echo "Configure an agent only..."
- read -erp "What is the clusterDNS Name?" clusterDNS
- read -ersp "What is the secret token?" TOKEN
+ read -rp "What is the clusterDNS Name?" clusterDNS
+ read -rsp "What is the secret token?" TOKEN
  curl -sfL https://get.k3s.io | K3S_URL=https://$(clusterDNS):6443 K3S_TOKEN=$(TOKEN) sh -
  
  
