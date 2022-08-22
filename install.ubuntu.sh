@@ -11,10 +11,9 @@ apt-get install -y curl cron-apt unattended-upgrades msmtp-mta
 echo "Update system..."
 apt-get upgrade -y
 
-set -xv
 # check if leader = true = 1
- if $LEADER ;
- then
+if $LEADER ;
+then
   read -erp "Is there already a leader in place? [y/n]" -i "y" r
   if [[ "$r" == "y" ];
   then
