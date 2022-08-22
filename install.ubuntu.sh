@@ -40,7 +40,7 @@ then
   #read -rp "What should be the clusterDNS Name?" clusterDNS
   #read -rp "What should be the clusterDomain Name like k3s.local?" clusterDomain
   echo "Install k3s..."
-  CMD="curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $(clusterDNS) --cluster-domain $(clusterDomain)"
+  CMD="curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $clusterDNS --cluster-domain $clusterDomain"
   $CMD
    
   echo "Install helm..."
@@ -70,7 +70,7 @@ else
  echo "Configure an agent only..."
  #read -rp "What is the clusterDNS Name?" clusterDNS
  #read -rsp "What is the secret token?" TOKEN
- CMD="curl -sfL https://get.k3s.io | K3S_URL=https://$(clusterDNS):6443 K3S_TOKEN=$(K3S_TOKEN) sh -"
+ CMD="curl -sfL https://get.k3s.io | K3S_URL=https://$clusterDNS:6443 K3S_TOKEN=$K3S_TOKEN sh -"
  $CMD
 fi
 echo "Node installed and can now be configured."
