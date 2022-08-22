@@ -16,7 +16,7 @@ set -xv
 
 if [ "$LEADER" = true ] ;
 then
-  read -rp "Is there already a leader in place? [y/n]" -i "y" r
+  read -rp "Is there already a leader in place? [y/n]" r
   if [ "$r" = "y" ];
   then
    read -rp "What is the clusterDNS Name?" clusterDNS
