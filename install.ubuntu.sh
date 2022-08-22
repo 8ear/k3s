@@ -11,24 +11,23 @@ echo "Update system..."
 #apt-get upgrade -y
 
 # check if leader = true = 1
-echo "$LEADER"
 set -xv
 
-if [ "$LEADER" = true ] ;
+if [ "$LEADER" ] ;
 then
   read -rp "Is there already a leader in place? [y/n]" r
-  if [ "$r" = "y" ];
+  if [ "$K3S_CLUSTER_INIT" ];
   then
-   read -rp "What is the clusterDNS Name?" clusterDNS
-   read -rsp "What is the secret token?" TOKEN
+   #read -rp "What is the clusterDNS Name?" clusterDNS
+   #read -rsp "What is the secret token?" TOKEN
    echo "Install k3s..."
    curl -sfL https://get.k3s.io | K3S_TOKEN=$(TOKEN) sh -s - server --server https://$(clusterDNS):6443 --tls-san $(clusterDNS)
    echo "Check Nodes"
    kubectl get nodes
   else
   
-  read -rp "What should be the clusterDNS Name?" clusterDNS
-  read -rp "What should be the clusterDomain Name like k3s.local?" clusterDomain
+  #read -rp "What should be the clusterDNS Name?" clusterDNS
+  #read -rp "What should be the clusterDomain Name like k3s.local?" clusterDomain
   echo "Install k3s..."
   curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $(clusterDNS) --cluster-domain "$clusterDomain"
    
@@ -53,8 +52,8 @@ then
   fi
 else
  echo "Configure an agent only..."
- read -rp "What is the clusterDNS Name?" clusterDNS
- read -rsp "What is the secret token?" TOKEN
+ #read -rp "What is the clusterDNS Name?" clusterDNS
+ #read -rsp "What is the secret token?" TOKEN
  curl -sfL https://get.k3s.io | K3S_URL=https://$(clusterDNS):6443 K3S_TOKEN=$(TOKEN) sh -
  
  
