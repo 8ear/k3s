@@ -8,14 +8,27 @@ apt-get update
 echo "Verify that required packages are available..."
 apt-get install -y curl cron-apt unattended-upgrades msmtp-mta
 
-echo "Install k3s..."
-curl -sfL https://get.k3s.io | sh -
-
 echo "Update system..."
 apt-get upgrade -y
 
- if [ "${LEADER}" == "YES" ] || [ "${LEADER}" == "yes" ] ;
+ if [[ "${LEADER}" == "YES" ]] || [[ "${LEADER}" == "yes" ]] ;
  then
+  echo "Is there already a leader in place? [y/n]"
+  input r
+  if [[ "$r" == "y" ];
+  then
+   echo "What is the clusterDNS Name?"
+   read clusterDNS
+   echo "What is the secret token?"
+   read TOKEN
+   echo "Install k3s..."
+   curl -sfL https://get.k3s.io | K3S_TOKEN=$(TOKEN) sh -s - server --server https://$(clusterDNS):6443 --tls-san $(clusterDNS)
+  fi
+  
+  echo "Check Nodes"
+  kubectl get nodes
+  exit 1
+  
   echo "Install helm..."
   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
   sudo apt-get install apt-transport-https --yes
@@ -27,6 +40,17 @@ apt-get upgrade -y
   curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-${KOMPOSE_VERSION}-amd64.deb -o kompose.deb
   apt install ./kompose.deb
   rm ./kompose.deb
+  
+else
+ echo "Configure an agent only..."
+ echo "What is the secret token?"
+ read TOKEN
+ echo "What is the clusterDNS Name?"
+ read clusterDNS
+ curl -sfL https://get.k3s.io | K3S_URL=https://$(clusterDNS):6443 K3S_TOKEN=$(TOKEN) sh -
+ 
+ 
 fi
+
 
 echo "Node installed and can now be configured."
