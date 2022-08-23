@@ -25,6 +25,7 @@ then
   #read -rp "Is there already a leader in place? [y/n]" r
   if [ "$K3S_CLUSTER_INIT" != true ];
   then
+    # This section add additional leader server to an existing cluster
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
    echo "Install k3s..."
@@ -33,8 +34,7 @@ then
    kubectl get nodes
   else
   
-  #read -rp "What should be the clusterDNS Name?" clusterDNS
-  #read -rp "What should be the clusterDomain Name like k3s.local?" clusterDomain
+  # This section creates a new cluster
   echo "Install k3s..."
   curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $clusterDNS --cluster-domain $clusterDomain
    
@@ -54,11 +54,19 @@ then
   chmod +x kompose
   sudo mv ./kompose /usr/local/bin/kompose
   
+  # make kube config available
+  cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+  
   echo "Install Longhorn"
   helm repo add longhorn https://charts.longhorn.io
   helm repo update
   helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace
   kubectl -n longhorn-system get pod
+  
+  echo "Install falco"
+  helm repo add falcosecurity https://falcosecurity.github.io/charts
+  helm repo update
+  helm install falco falcosecurity/falco --namespace falco --create-namespace
   
   fi
 else
