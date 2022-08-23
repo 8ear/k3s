@@ -6,7 +6,7 @@ KOMPOSE_VERSION="v1.26.1"
 clusterDNS="${clusterDNS}"
 clusterDomain="${clusterDomain}"
 K3S_TOKEN="${TOKEN}"
-
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 echo "Update APT repositories..."
 apt-get update
