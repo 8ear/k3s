@@ -29,12 +29,18 @@ then
    #read -rp "What is the clusterDNS Name?" clusterDNS
    #read -rsp "What is the secret token?" TOKEN
    echo "Install k3s..."
-   curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server --server https://$clusterDNS:6443 --tls-san $clusterDNS
+   curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN sh -s - server --disable traefik --disable servicelb --server https://$clusterDNS:6443 --tls-san $clusterDNS
    echo "Check Nodes"
    kubectl get nodes
   else
-  
+  #
   # This section creates a new cluster
+  #
+  echo "Create Manifest folder"
+  mkdir -p /var/lib/rancher/k3s/server/manifests
+  echo "Add kube-vip DaemonSet RBAC manifest"
+  curl https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
+  
   echo "Install k3s..."
   curl -sfL https://get.k3s.io | sh -s - server --cluster-init --tls-san $clusterDNS --cluster-domain $clusterDomain
    
@@ -53,9 +59,6 @@ then
   curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64 -o kompose
   chmod +x kompose
   sudo mv ./kompose /usr/local/bin/kompose
-  
-  # make kube config available
-  cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
   
   echo "Install Longhorn"
   helm repo add longhorn https://charts.longhorn.io
@@ -76,10 +79,12 @@ else
  curl -sfL https://get.k3s.io | K3S_URL=https://$clusterDNS:6443 K3S_TOKEN=$K3S_TOKEN sh -
 fi
 
-exit 1
 echo "Update system..."
 apt-get upgrade -y
 
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+kubectl get all --all-namespaces
+  
 
 
 echo "Node installed and can now be configured."
